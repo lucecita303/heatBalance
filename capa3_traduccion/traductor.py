@@ -64,6 +64,21 @@ def preparar_datos(temperatura_ambiente, uso_cpu, uso_gpu):
     }
 
 
+def reconstruir_resultado(solucion, variables, temperatura_ambiente, uso_cpu, uso_gpu):
+    return {
+        "T_CPU": round(solucion[0], 6),
+        "T_GPU": round(solucion[1], 6),
+        "variables": variables,
+        "temperatura_ambiente": temperatura_ambiente,
+        "uso_cpu": uso_cpu,
+        "uso_gpu": uso_gpu,
+        "alerta_cpu": solucion[0] > 85,
+        "alerta_gpu": solucion[1] > 90,
+        "mensaje_cpu": "TEMPERATURA CRÍTICA EN CPU" if solucion[0] > 85 else "CPU en rango normal",
+        "mensaje_gpu": "TEMPERATURA CRÍTICA EN GPU" if solucion[1] > 90 else "GPU en rango normal",
+    }
+
+
 if __name__ == "__main__":
     resultado = preparar_datos(25.0, 70.0, 90.0)
 
@@ -80,3 +95,13 @@ if __name__ == "__main__":
 
     if resultado["advertencia"]:
         print(f"Advertencia             : {resultado['advertencia']}")
+
+    print("\nPrueba de conversión inversa:")
+    solucion_simulada = [60.383063, 73.538306]
+    reconstruido = reconstruir_resultado(
+        solucion_simulada,
+        resultado["variables"],
+        25.0, 70.0, 90.0
+    )
+    for clave, valor in reconstruido.items():
+        print(f"  {clave}: {valor}")
