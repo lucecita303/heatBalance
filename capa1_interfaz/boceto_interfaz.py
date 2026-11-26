@@ -21,7 +21,7 @@ OK = "#2e7d32"
 class ThermoPCBoceto:
     def __init__(self, root):
         self.root = root
-        root.title("ThermoPC | Boceto de interfaz")
+        root.title("HeatBalance | Boceto de interfaz")
         root.geometry("1100x860")
         root.minsize(950, 760)
         root.configure(bg=BG)
